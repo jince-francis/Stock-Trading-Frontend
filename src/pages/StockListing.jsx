@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TrendingUp, TrendingDown, Search, Filter, BarChart3, DollarSign, ArrowUpRight, ArrowDownRight, RefreshCw, Star, Activity, Zap } from 'lucide-react';
 
 const StocksListingPage = () => {
+  const navigate = useNavigate();
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -146,46 +148,44 @@ const StocksListingPage = () => {
             </div>
           </div>
 
-          {/* Market Summary */}
-          {!loading && stocks.length > 0 && (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6">
-              <div className="bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-green-600/10 border border-green-400/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm">
-                <div className="flex items-center gap-2 mb-1">
-                  <TrendingUp className="w-4 h-4 text-green-400" />
-                  <span className="text-green-300 text-xs sm:text-sm font-medium">Top Gainer</span>
-                </div>
-                <div className="text-white font-bold text-sm sm:text-base">{getTopGainer().symbol}</div>
-                <div className="text-green-400 text-xs">{formatChangePercent(getTopGainer().changePercent || 0)}</div>
+          {/* Market Stats Row */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
+            <div className="bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-green-600/10 border border-green-400/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm">
+              <div className="flex items-center gap-2 mb-1">
+                <TrendingUp className="w-4 h-4 text-green-400" />
+                <span className="text-green-300 text-xs sm:text-sm font-medium">Top Gainer</span>
               </div>
-              
-              <div className="bg-gradient-to-br from-red-500/10 via-red-500/5 to-red-600/10 border border-red-400/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm">
-                <div className="flex items-center gap-2 mb-1">
-                  <TrendingDown className="w-4 h-4 text-red-400" />
-                  <span className="text-red-300 text-xs sm:text-sm font-medium">Top Loser</span>
-                </div>
-                <div className="text-white font-bold text-sm sm:text-base">{getTopLoser().symbol}</div>
-                <div className="text-red-400 text-xs">{formatChangePercent(getTopLoser().changePercent || 0)}</div>
-              </div>
-
-              <div className="bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-blue-600/10 border border-blue-400/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm">
-                <div className="flex items-center gap-2 mb-1">
-                  <BarChart3 className="w-4 h-4 text-blue-400" />
-                  <span className="text-blue-300 text-xs sm:text-sm font-medium">Total Stocks</span>
-                </div>
-                <div className="text-white font-bold text-sm sm:text-base">{stocks.length}</div>
-                <div className="text-blue-400 text-xs">Available</div>
-              </div>
-
-              <div className="bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-purple-600/10 border border-purple-400/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm">
-                <div className="flex items-center gap-2 mb-1">
-                  <Zap className="w-4 h-4 text-purple-400" />
-                  <span className="text-purple-300 text-xs sm:text-sm font-medium">Active Trades</span>
-                </div>
-                <div className="text-white font-bold text-sm sm:text-base">142</div>
-                <div className="text-purple-400 text-xs">Today</div>
-              </div>
+              <div className="text-white font-bold text-sm sm:text-base">{getTopGainer().symbol}</div>
+              <div className="text-green-400 text-xs">{formatChangePercent(getTopGainer().changePercent || 0)}</div>
             </div>
-          )}
+            
+            <div className="bg-gradient-to-br from-red-500/10 via-red-500/5 to-red-600/10 border border-red-400/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm">
+              <div className="flex items-center gap-2 mb-1">
+                <TrendingDown className="w-4 h-4 text-red-400" />
+                <span className="text-red-300 text-xs sm:text-sm font-medium">Top Loser</span>
+              </div>
+              <div className="text-white font-bold text-sm sm:text-base">{getTopLoser().symbol}</div>
+              <div className="text-red-400 text-xs">{formatChangePercent(getTopLoser().changePercent || 0)}</div>
+            </div>
+
+            <div className="bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-blue-600/10 border border-blue-400/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm">
+              <div className="flex items-center gap-2 mb-1">
+                <BarChart3 className="w-4 h-4 text-blue-400" />
+                <span className="text-blue-300 text-xs sm:text-sm font-medium">Total Stocks</span>
+              </div>
+              <div className="text-white font-bold text-sm sm:text-base">{stocks.length}</div>
+              <div className="text-blue-400 text-xs">Available</div>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-purple-600/10 border border-purple-400/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm">
+              <div className="flex items-center gap-2 mb-1">
+                <Zap className="w-4 h-4 text-purple-400" />
+                <span className="text-purple-300 text-xs sm:text-sm font-medium">Active Trades</span>
+              </div>
+              <div className="text-white font-bold text-sm sm:text-base">142</div>
+              <div className="text-purple-400 text-xs">Today</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -335,7 +335,10 @@ const StocksListingPage = () => {
 
                 {/* Action Button */}
                 <div className="relative">
-                  <button className="w-full py-3 px-4 bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-500/40 text-blue-300 rounded-xl hover:from-blue-500/40 hover:to-blue-600/40 hover:border-blue-400/60 transition-all duration-200 text-sm font-medium group-hover:shadow-lg group-hover:shadow-blue-500/20 flex items-center justify-center gap-2">
+                  <button 
+                    className="w-full py-3 px-4 bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-500/40 text-blue-300 rounded-xl hover:from-blue-500/40 hover:to-blue-600/40 hover:border-blue-400/60 transition-all duration-200 text-sm font-medium group-hover:shadow-lg group-hover:shadow-blue-500/20 flex items-center justify-center gap-2"
+                    onClick={() => navigate('/trading')}
+                  >
                     <BarChart3 className="w-4 h-4" />
                     <span>View Chart</span>
                   </button>
