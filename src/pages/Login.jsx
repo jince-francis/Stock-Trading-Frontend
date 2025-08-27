@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, TrendingUp, BarChart3, LogIn } from 'lucide-react';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -228,7 +230,7 @@ const LoginPage = () => {
             <div className="p-3 sm:p-4 bg-blue-500/10 border border-blue-400/20 rounded-lg">
               <p className="text-blue-300 text-xs sm:text-sm font-medium mb-2">Quick Demo Access</p>
               <button 
-                onClick={() => setFormData({ email: 'demo@mockstreet.com', password: 'demo123' })}
+                onClick={() => { setFormData({ email: 'demo@mockstreet.com', password: 'demo123' }); navigate('/stocks'); }}
                 className="w-full px-3 py-1.5 bg-blue-600/20 text-blue-300 text-xs rounded border border-blue-500/30 hover:bg-blue-600/30 transition-colors"
               >
                 Try Demo Account

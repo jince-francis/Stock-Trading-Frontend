@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TrendingUp, TrendingDown, Search, Filter, BarChart3, DollarSign, ArrowUpRight, ArrowDownRight, RefreshCw, Star, Activity, Zap } from 'lucide-react';
+import { TrendingUp, TrendingDown, Search, Filter, BarChart3, DollarSign, ArrowUpRight, ArrowDownRight, RefreshCw, Star, Activity, Zap, Briefcase, History, User, Settings, Bell } from 'lucide-react';
 
 const StocksListingPage = () => {
-  const navigate = useNavigate();
   const [stocks, setStocks] = useState([]);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('symbol');
   const [filterBy, setFilterBy] = useState('all');
+
+  // Navigation handler to route to pages
+  const handleNavigation = (path, data = null) => {
+    navigate(path);
+  };
+
+  // Mock portfolio data for demonstration
+  const portfolioValue = 45250.80;
+  const portfolioChange = +1850.25;
+  const portfolioChangePercent = +4.27;
+  const totalInvested = 43400.55;
+  const recentTransactions = 12;
 
   // Mock data for demonstration - replace with actual API call
   const mockStocks = [
@@ -110,7 +122,7 @@ const StocksListingPage = () => {
       <div className="bg-gray-950/90 backdrop-blur-2xl border-b border-gray-800/50 sticky top-0 z-40 shadow-2xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 cursor-pointer" onClick={() => navigate('/') }>
               <div className="relative">
                 <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-500 via-emerald-500 to-green-600 rounded-2xl shadow-2xl shadow-green-500/20">
                   <BarChart3 className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
@@ -130,6 +142,35 @@ const StocksListingPage = () => {
             </div>
             
             <div className="flex items-center gap-3">
+              {/* Portfolio & History Navigation */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleNavigation('/portfolio')}
+                  className="group flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-purple-600/20 via-purple-600/15 to-purple-700/20 text-purple-300 rounded-xl border border-purple-500/30 hover:border-purple-400/50 hover:from-purple-600/30 hover:to-purple-700/30 transition-all duration-300 text-sm font-medium shadow-lg hover:shadow-purple-500/20 relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <Briefcase className="w-4 h-4 relative z-10" />
+                  <span className="hidden sm:inline relative z-10">Portfolio</span>
+                  {portfolioChange > 0 && (
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => handleNavigation('/transaction')}
+                  className="group flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-blue-600/20 via-blue-600/15 to-blue-700/20 text-blue-300 rounded-xl border border-blue-500/30 hover:border-blue-400/50 hover:from-blue-600/30 hover:to-blue-700/30 transition-all duration-300 text-sm font-medium shadow-lg hover:shadow-blue-500/20 relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <History className="w-4 h-4 relative z-10" />
+                  <span className="hidden sm:inline relative z-10">History</span>
+                  {recentTransactions > 0 && (
+                    <div className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-orange-500 text-white text-xs rounded-full min-w-[1.2rem] h-5 flex items-center justify-center">
+                      {recentTransactions > 9 ? '9+' : recentTransactions}
+                    </div>
+                  )}
+                </button>
+              </div>
+
               {/* Market Status */}
               <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-400/20 rounded-xl backdrop-blur-sm">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -145,6 +186,60 @@ const StocksListingPage = () => {
                 <span className="hidden sm:inline">Refresh Markets</span>
                 <span className="sm:hidden">Refresh</span>
               </button>
+            </div>
+          </div>
+
+          {/* Portfolio Summary Bar */}
+          <div className="mt-6 bg-gradient-to-r from-purple-500/10 via-purple-500/5 to-purple-600/10 border border-purple-400/20 rounded-xl p-4 backdrop-blur-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                    <Briefcase className="w-4 h-4 text-purple-400" />
+                  </div>
+                  <div>
+                    <p className="text-purple-300 text-sm font-medium">Portfolio Value</p>
+                    <p className="text-white font-bold text-lg">{formatPrice(portfolioValue)}</p>
+                  </div>
+                </div>
+                
+                <div className="hidden sm:block w-px h-12 bg-gray-600/50"></div>
+                
+                <div className="flex items-center gap-4">
+                  <div>
+                    <p className="text-gray-400 text-sm">Today's P&L</p>
+                    <div className={`flex items-center gap-1 font-semibold ${portfolioChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      {portfolioChange >= 0 ? (
+                        <TrendingUp className="w-3 h-3" />
+                      ) : (
+                        <TrendingDown className="w-3 h-3" />
+                      )}
+                      <span>{formatPrice(portfolioChange)}</span>
+                      <span className="text-sm">({formatChangePercent(portfolioChangePercent)})</span>
+                    </div>
+                  </div>
+                  
+                  <div className="hidden md:block">
+                    <p className="text-gray-400 text-sm">Total Invested</p>
+                    <p className="text-white font-medium">{formatPrice(totalInvested)}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => handleNavigation('/portfolio')}
+                  className="px-4 py-2 bg-purple-600/30 text-purple-300 rounded-lg hover:bg-purple-600/40 transition-colors text-sm font-medium border border-purple-500/30"
+                >
+                  View Details
+                </button>
+                <button
+                  onClick={() => handleNavigation('/trading')}
+                  className="px-4 py-2 bg-green-600/30 text-green-300 rounded-lg hover:bg-green-600/40 transition-colors text-sm font-medium border border-green-500/30"
+                >
+                  Start Trading
+                </button>
+              </div>
             </div>
           </div>
 
@@ -237,6 +332,46 @@ const StocksListingPage = () => {
                 </select>
                 <Filter className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Actions Bar */}
+        <div className="bg-gradient-to-r from-gray-900/60 via-gray-800/40 to-gray-900/60 backdrop-blur-xl border border-gray-700/30 rounded-2xl p-4 mb-8 shadow-xl">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <h3 className="text-white font-semibold text-base sm:text-lg">Quick Actions</h3>
+              <div className="w-px h-6 bg-gray-600/50"></div>
+              <span className="text-gray-400 text-sm">Manage your investments</span>
+            </div>
+            
+            <div className="flex items-center gap-2 sm:gap-3">
+              <button
+                onClick={() => handleNavigation('/portfolio')}
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-purple-600/25 to-purple-700/25 text-purple-300 rounded-lg hover:from-purple-600/35 hover:to-purple-700/35 transition-all duration-200 text-sm font-medium border border-purple-500/25 hover:border-purple-400/40"
+              >
+                <Briefcase className="w-4 h-4" />
+                <span className="hidden sm:inline">My Portfolio</span>
+                <span className="sm:hidden">Portfolio</span>
+              </button>
+              
+              <button
+                onClick={() => handleNavigation('/transactionhistory')}
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-600/25 to-blue-700/25 text-blue-300 rounded-lg hover:from-blue-600/35 hover:to-blue-700/35 transition-all duration-200 text-sm font-medium border border-blue-500/25 hover:border-blue-400/40"
+              >
+                <History className="w-4 h-4" />
+                <span className="hidden sm:inline">Transaction History</span>
+                <span className="sm:hidden">History</span>
+              </button>
+              
+              <button
+                onClick={() => handleNavigation('/watchlist')}
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-yellow-600/25 to-orange-700/25 text-yellow-300 rounded-lg hover:from-yellow-600/35 hover:to-orange-700/35 transition-all duration-200 text-sm font-medium border border-yellow-500/25 hover:border-yellow-400/40"
+              >
+                <Star className="w-4 h-4" />
+                <span className="hidden sm:inline">Watchlist</span>
+                <span className="sm:hidden">Watch</span>
+              </button>
             </div>
           </div>
         </div>
@@ -337,7 +472,7 @@ const StocksListingPage = () => {
                 <div className="relative">
                   <button 
                     className="w-full py-3 px-4 bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-500/40 text-blue-300 rounded-xl hover:from-blue-500/40 hover:to-blue-600/40 hover:border-blue-400/60 transition-all duration-200 text-sm font-medium group-hover:shadow-lg group-hover:shadow-blue-500/20 flex items-center justify-center gap-2"
-                    onClick={() => navigate('/trading')}
+                    onClick={() => handleNavigation('/trading', { symbol: stock.symbol })}
                   >
                     <BarChart3 className="w-4 h-4" />
                     <span>View Chart</span>

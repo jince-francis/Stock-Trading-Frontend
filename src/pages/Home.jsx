@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -27,6 +28,7 @@ import {
 } from 'lucide-react';
 
 const MockStreetHomepage = () => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [scrollY, setScrollY] = useState(0);
@@ -127,7 +129,7 @@ const MockStreetHomepage = () => {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/') }>
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700 rounded-2xl shadow-2xl shadow-blue-500/25 flex items-center justify-center">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
@@ -138,13 +140,13 @@ const MockStreetHomepage = () => {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-slate-300 hover:text-white transition-colors duration-200 font-medium">Features</a>
-              <a href="#free-platform" className="text-slate-300 hover:text-white transition-colors duration-200 font-medium">Free Platform</a>
-              <a href="#about" className="text-slate-300 hover:text-white transition-colors duration-200 font-medium">About</a>
-              <button className="px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200">
+              <a href="#features" className="text-slate-300 hover:text-white transition-colors duration-200 font-medium" onClick={e => {e.preventDefault(); document.getElementById('features').scrollIntoView({ behavior: 'smooth' });}}>Features</a>
+              <a href="#free-platform" className="text-slate-300 hover:text-white transition-colors duration-200 font-medium" onClick={e => {e.preventDefault(); document.getElementById('free-platform').scrollIntoView({ behavior: 'smooth' });}}>Free Platform</a>
+              <a href="#about" className="text-slate-300 hover:text-white transition-colors duration-200 font-medium" onClick={e => {e.preventDefault(); document.getElementById('about').scrollIntoView({ behavior: 'smooth' });}}>About</a>
+              <button className="px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200" onClick={() => navigate('/login')}>
                 Login
               </button>
-              <button className="px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg text-white font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-blue-500/25">
+              <button className="px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg text-white font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-blue-500/25" onClick={() => navigate('/register')}>
                 Get Started Free
               </button>
             </div>
@@ -162,14 +164,14 @@ const MockStreetHomepage = () => {
           {isMenuOpen && (
             <div className="md:hidden absolute top-16 left-0 right-0 bg-slate-950/95 backdrop-blur-2xl border-b border-slate-800/60 shadow-2xl">
               <div className="px-4 py-6 space-y-4">
-                <a href="#features" className="block text-slate-300 hover:text-white transition-colors duration-200 font-medium">Features</a>
-                <a href="#free-platform" className="block text-slate-300 hover:text-white transition-colors duration-200 font-medium">Free Platform</a>
-                <a href="#about" className="block text-slate-300 hover:text-white transition-colors duration-200 font-medium">About</a>
+                <a href="#features" className="block text-slate-300 hover:text-white transition-colors duration-200 font-medium" onClick={e => {e.preventDefault(); document.getElementById('features').scrollIntoView({ behavior: 'smooth' });}}>Features</a>
+                <a href="#free-platform" className="block text-slate-300 hover:text-white transition-colors duration-200 font-medium" onClick={e => {e.preventDefault(); document.getElementById('free-platform').scrollIntoView({ behavior: 'smooth' });}}>Free Platform</a>
+                <a href="#about" className="block text-slate-300 hover:text-white transition-colors duration-200 font-medium" onClick={e => {e.preventDefault(); document.getElementById('about').scrollIntoView({ behavior: 'smooth' });}}>About</a>
                 <div className="pt-4 space-y-2">
-                  <button className="w-full px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200">
+                  <button className="w-full px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200" onClick={() => navigate('/login')}>
                     Login
                   </button>
-                  <button className="w-full px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg text-white font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-blue-500/25">
+                  <button className="w-full px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg text-white font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-blue-500/25" onClick={() => navigate('/register')}>
                     Get Started Free
                   </button>
                 </div>
@@ -205,13 +207,13 @@ const MockStreetHomepage = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl text-white font-bold text-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-2xl shadow-blue-500/25 hover:scale-105 flex items-center gap-3">
+              <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl text-white font-bold text-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-2xl shadow-blue-500/25 hover:scale-105 flex items-center gap-3" onClick={() => navigate('/stocks')}>
                 Start Trading Now
                 <ArrowRight className="w-5 h-5" />
               </button>
-              <button className="px-8 py-4 bg-slate-800/50 border border-slate-600/50 rounded-2xl text-white font-bold text-lg hover:bg-slate-700/50 transition-all duration-200 backdrop-blur-sm flex items-center gap-3">
+              <button className="px-8 py-4 bg-slate-800/50 border border-slate-600/50 rounded-2xl text-white font-bold text-lg hover:bg-slate-700/50 transition-all duration-200 backdrop-blur-sm flex items-center gap-3" onClick={() => navigate('/stocks')}>
                 <Play className="w-5 h-5" />
-                Watch Demo
+                Try Demo
               </button>
             </div>
           </div>
@@ -387,7 +389,7 @@ const MockStreetHomepage = () => {
               </div>
 
               <div className="text-center">
-                <button className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl text-white font-bold text-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-2xl shadow-emerald-500/25 hover:scale-105 flex items-center gap-3 mx-auto">
+                <button className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl text-white font-bold text-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-2xl shadow-emerald-500/25 hover:scale-105 flex items-center gap-3 mx-auto" onClick={() => navigate('/register')}>
                   Get Started for Free
                   <ArrowRight className="w-5 h-5" />
                 </button>
@@ -409,7 +411,7 @@ const MockStreetHomepage = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl text-white font-bold text-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-2xl shadow-blue-500/25 hover:scale-105 flex items-center gap-3">
+            <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl text-white font-bold text-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-2xl shadow-blue-500/25 hover:scale-105 flex items-center gap-3" onClick={() => navigate('/register')}>
               Create Free Account
               <ArrowRight className="w-5 h-5" />
             </button>
@@ -453,7 +455,7 @@ const MockStreetHomepage = () => {
             <div>
               <h4 className="text-white font-semibold mb-4">Platform</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-slate-400 hover:text-white transition-colors duration-200">Features</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-white transition-colors duration-200" onClick={e => {e.preventDefault(); document.getElementById('features').scrollIntoView({ behavior: 'smooth' });}}>Features</a></li>
                 <li><a href="#" className="text-slate-400 hover:text-white transition-colors duration-200">API</a></li>
                 <li><a href="#" className="text-slate-400 hover:text-white transition-colors duration-200">Security</a></li>
                 <li><a href="#" className="text-slate-400 hover:text-white transition-colors duration-200">Status</a></li>
